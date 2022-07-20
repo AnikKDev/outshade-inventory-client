@@ -6,8 +6,8 @@ import { signOut } from 'firebase/auth';
 const Header = () => {
     const [user, loading, error] = useAuthState(auth);
     const menuOptions = <>
-        <li className="mx-2 font-semibold"><NavLink to="/home">Home</NavLink></li>
-        {user && <li className="mx-2 font-semibold"><NavLink to="/inventory">Inventory</NavLink></li>}
+        <li className="mx-2 font-semibold"><NavLink to="/">Home</NavLink></li>
+        {user && <li className="mx-2 font-semibold"><NavLink to="/dashboard">Dashboard</NavLink></li>}
     </>;
     const location = useLocation();
     console.log();
@@ -18,7 +18,7 @@ const Header = () => {
     }
 
     return (
-        <div className="navbar bg-base-100 lg:px-6 my-4">
+        <div className="navbar bg-gray-200 lg:px-6 py-4">
             <div className="navbar-start">
                 <div className="dropdown">
                     <label tabIndex="0" className="btn btn-ghost lg:hidden">
