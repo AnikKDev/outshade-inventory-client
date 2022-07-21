@@ -1,12 +1,9 @@
-# ReactJS with tailwind css installed
+# Inventory Management
 
-This project was created to use with tailwind css.
+This project was created to use with tailwind css and React. 
 
 ## About
 
-You don't have to install tailwind css again and again each time to build your project. In this repository, tailwind css is already installed as React dependecy. 
+User can do CRUD operation here. I have used, taiwind, react query, google firebase authentication, react hook form etc.
 
-## How to use it
-
-### clone this repository
-### run "npm install"
+## LIVE [Live Link]('https://outshade-inventory-client.web.app')

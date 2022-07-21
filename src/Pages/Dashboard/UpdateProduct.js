@@ -11,7 +11,7 @@ const UpdateProduct = () => {
     const { register, handleSubmit, watch, formState: { errors }, reset } = useForm();
 
     useEffect(() => {
-        fetch(`http://localhost:5000/products/${id}`)
+        fetch(`https://fast-badlands-17448.herokuapp.com/products/${id}`)
             .then(res => res.json())
             .then(data => setProductdetail(data))
     }, [id]);
@@ -29,7 +29,7 @@ const UpdateProduct = () => {
             category: data.category
         };
 
-        fetch(`http://localhost:5000/products/${id}`, {
+        fetch(`https://fast-badlands-17448.herokuapp.com/products/${id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json'

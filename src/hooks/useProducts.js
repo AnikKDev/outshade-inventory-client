@@ -4,7 +4,7 @@ import {
 
 
 const useProducts = () => {
-    const { data: products, isLoading, refetch } = useQuery(['products'], () => fetch('http://localhost:5000/products').then(res => res.json()));
+    const { data: products, isLoading, refetch } = useQuery(['products'], () => fetch('https://fast-badlands-17448.herokuapp.com/products').then(res => res.json()));
 
     return [products, isLoading, refetch];
 };

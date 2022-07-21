@@ -13,7 +13,7 @@ const Inventory = () => {
     const catRef = useRef('');
     useEffect(() => {
         setLoaded(true)
-        fetch(`http://localhost:5000/products/${category}`)
+        fetch(`https://fast-badlands-17448.herokuapp.com/products/${category}`)
             .then(res => res.json())
             .then(data => {
                 setProducts(data);
@@ -31,7 +31,7 @@ const Inventory = () => {
     };
     // delete
     const deleteHandler = id => {
-        fetch(`http://localhost:5000/products/${id}`, {
+        fetch(`https://fast-badlands-17448.herokuapp.com/products/${id}`, {
             method: 'DELETE'
         })
             .then(res => res.json())
@@ -47,7 +47,7 @@ const Inventory = () => {
         const newCategory = { category: catRef.current.value };
 
         if (newCategory > 0) {
-            fetch('http://localhost:5000/categories', {
+            fetch('https://fast-badlands-17448.herokuapp.com/categories', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

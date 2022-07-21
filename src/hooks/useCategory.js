@@ -5,7 +5,7 @@ import {
 
 
 const useCategory = () => {
-    const { data: categories, isLoading, refetch } = useQuery(['orders'], () => fetch('http://localhost:5000/categories').then(res => res.json()));
+    const { data: categories, isLoading, refetch } = useQuery(['orders'], () => fetch('https://fast-badlands-17448.herokuapp.com/categories').then(res => res.json()));
 
     return [categories, isLoading, refetch];
 };
