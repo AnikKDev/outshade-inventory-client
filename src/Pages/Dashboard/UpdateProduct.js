@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import useCategory from '../../hooks/useCategory';
 import LoadingSpinner from '../SharedPages/LoadingSpinner';
+import toast from 'react-hot-toast';
 
 const UpdateProduct = () => {
     const { id } = useParams();
@@ -14,7 +15,7 @@ const UpdateProduct = () => {
             .then(res => res.json())
             .then(data => setProductdetail(data))
     }, [id]);
-    console.log(productDetail);
+    // console.log(productDetail);
 
     // get all the categories
     const [categories, isLoading, refetch] = useCategory();
@@ -27,6 +28,24 @@ const UpdateProduct = () => {
             quantity: data.quantity,
             category: data.category
         };
+
+        fetch(`http://localhost:5000/products/${id}`, {
+            method: 'PATCH',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(product)
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.modifiedCount) {
+                    toast.success('Updated successfully')
+                }
+                else {
+                    toast.error('Something went wrong. Try again!')
+                }
+            })
+
         console.log(product)
     };
 
@@ -59,7 +78,7 @@ const UpdateProduct = () => {
                             >
                                 {
                                     categories?.map(category =>
-                                        <option selected={productDetail.category === category.category}>
+                                        <option defaultValue={productDetail.category === category?.category} selected={productDetail.category === category?.category}>
                                             {category?.category}
                                         </option>
                                     )
