@@ -1,9 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import useCategory from '../../hooks/useCategory';
-import useProducts from '../../hooks/useProducts';
-
 import LoadingSpinner from '../SharedPages/LoadingSpinner';
 const Inventory = () => {
 
@@ -25,14 +23,18 @@ const Inventory = () => {
     }, [category])
     const handleSelectedCategory = (e) => {
         setCategory(e.target.value);
+    };
+    const navigate = useNavigate();
+    // update product
+    const updateHandler = id => {
+        navigate(`/products/${id}`)
     }
 
     // add category
     const addCategory = () => {
-        console.log(catRef.current.value);
         const newCategory = { category: catRef.current.value };
 
-        if (newCategory) {
+        if (newCategory > 0) {
             fetch('http://localhost:5000/categories', {
                 method: 'POST',
                 headers: {
@@ -47,6 +49,8 @@ const Inventory = () => {
                     }
                 })
 
+        } else {
+            toast.error('Something went wrong')
         }
         refetch()
     };
@@ -106,7 +110,13 @@ const Inventory = () => {
                                     <td>{product?.price}</td>
                                     <td>{product?.category}</td>
                                     <td>{product?.quantity}</td>
-                                    <td>Delete | Update</td>
+                                    <td>
+
+                                        <button onClick={() => updateHandler(product._id)} className="btn btn-sm btn-success mx-1">Update</button>
+                                        |
+                                        <button className="btn btn-sm btn-error mx-1">Delete</button>
+
+                                    </td>
                                 </tr>
                             )
                         }

@@ -1,16 +1,25 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { useForm } from "react-hook-form";
-import { toast } from 'react-hot-toast';
 import useCategory from '../../hooks/useCategory';
 import LoadingSpinner from '../SharedPages/LoadingSpinner';
-const AddProduct = () => {
+
+const UpdateProduct = () => {
+    const { id } = useParams();
+    const [productDetail, setProductdetail] = useState({});
+    const { register, handleSubmit, watch, formState: { errors }, reset } = useForm();
+
+    useEffect(() => {
+        fetch(`http://localhost:5000/products/${id}`)
+            .then(res => res.json())
+            .then(data => setProductdetail(data))
+    }, [id]);
+    console.log(productDetail);
 
     // get all the categories
     const [categories, isLoading, refetch] = useCategory();
-    // console.log(categories)
 
-    const { register, handleSubmit, watch, formState: { errors }, reset } = useForm();
-    // add tools
+
     const onSubmit = data => {
         const product = {
             productName: data.name,
@@ -18,31 +27,13 @@ const AddProduct = () => {
             quantity: data.quantity,
             category: data.category
         };
-        // console.log(product)
-
-        // add data to database
-        fetch('http://localhost:5000/products', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(product)
-        })
-            .then(res => res.json())
-            .then(data => {
-                if (data.acknowledged) {
-                    toast.success('Successfully added')
-                }
-            })
-        reset()
-
+        console.log(product)
     };
 
     if (isLoading) {
         return <LoadingSpinner />
     }
     return (
-
         < div >
             <div className=" flex justify-center">
                 <div className="mb-8 card w-full md:mt-11 md:w-96 items-center shadow-2xl bg-base-100">
@@ -53,8 +44,8 @@ const AddProduct = () => {
                             </label>
                             <input
                                 {...register("name", { required: true })}
-                                type="text" placeholder="Product Name" className="input input-bordered" />
-                            <span className="label-text text-error">{errors.name?.type === 'required' && "Name is required"}</span>
+                                type="text" placeholder="Product Name" className="input input-bordered" defaultValue={productDetail?.productName} />
+                            <span className="label-text text-error">{errors.name?.type === 'required' && "Please Update"}</span>
                         </div>
                         {/* select */}
                         <div className="form-control">
@@ -67,15 +58,15 @@ const AddProduct = () => {
                                 className="select select-bordered"
                             >
                                 {
-                                    categories.map(category =>
-                                        <option>
+                                    categories?.map(category =>
+                                        <option selected={productDetail.category === category.category}>
                                             {category?.category}
                                         </option>
                                     )
                                 }
                             </select>
                         </div>
-                        <span className="label-text text-error">{errors.category?.type === 'required' && "Category is required"}</span>
+                        <span className="label-text text-error">{errors.category?.type === 'required' && "Please Update"}</span>
 
 
 
@@ -85,8 +76,8 @@ const AddProduct = () => {
                             </label>
                             <input
                                 {...register("price", { required: true })}
-                                type="number" placeholder="Price Piece" className="input input-bordered" />
-                            <span className="label-text text-error">{errors.price?.type === 'required' && "Price is required"}</span>
+                                type="number" placeholder="Price Per Piece" className="input input-bordered" defaultValue={productDetail?.price} />
+                            <span className="label-text text-error">{errors.price?.type === 'required' && "Please Update"}</span>
                         </div>
 
 
@@ -96,12 +87,12 @@ const AddProduct = () => {
                             </label>
                             <input
                                 {...register("quantity", { required: true })}
-                                type="number" defaultValue={1} min={1} placeholder="Available Quantity" className="input input-bordered" />
-                            <span className="label-text text-error">{errors.quantity?.type === 'required' && "Quantity is required"}</span>
+                                type="number" defaultValue={productDetail.quantity} min={1} placeholder="Available Quantity" className="input input-bordered" />
+                            <span className="label-text text-error">{errors.quantity?.type === 'required' && "Please Update"}</span>
                         </div>
 
                         <div className="form-control mt-6">
-                            <button type="submit" className="btn btn-primary">Add Product</button>
+                            <button type="submit" className="btn btn-primary">Update Detail</button>
                         </div>
 
                     </form>
@@ -111,4 +102,4 @@ const AddProduct = () => {
     );
 };
 
-export default AddProduct;
+export default UpdateProduct;
