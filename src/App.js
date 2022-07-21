@@ -7,7 +7,7 @@ import { Toaster } from 'react-hot-toast';
 import Dashboard from './Pages/Dashboard/Dashboard';
 import AddProduct from './Pages/Dashboard/AddProduct';
 import UpdateProduct from './Pages/Dashboard/UpdateProduct';
-
+import MyProfile from './Pages/Profile/MyProfile'
 function App() {
   return (
     <div>
@@ -19,6 +19,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />}></Route>
         <Route path="/products/:id" element={<UpdateProduct />}></Route>
         <Route path="/add-product" element={<AddProduct />}></Route>
+        <Route path='/my-profile' element={<MyProfile></MyProfile>}></Route>
       </Routes>
 
 

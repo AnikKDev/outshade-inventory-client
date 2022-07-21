@@ -46,10 +46,10 @@ const Header = () => {
                         </label>
                         <ul tabindex="0" class="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52">
                             <li>
-                                <a class="justify-between">
+                                <Link to="/my-profile" class="justify-between">
                                     Profile
                                     <span class="badge">New</span>
-                                </a>
+                                </Link>
                             </li>
                             <li><a>{user?.displayName}</a></li>
                             <li className="mt-2"><button onClick={logout} className="btn btn-outline btn-primary">Logout</button></li>

@@ -28,6 +28,18 @@ const Inventory = () => {
     // update product
     const updateHandler = id => {
         navigate(`/products/${id}`)
+    };
+    // delete
+    const deleteHandler = id => {
+        fetch(`http://localhost:5000/products/${id}`, {
+            method: 'DELETE'
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.deletedCount > 0) {
+                    toast.success('Deleteed successfully. Please REFRESH the page.')
+                }
+            })
     }
 
     // add category
@@ -114,7 +126,7 @@ const Inventory = () => {
 
                                         <button onClick={() => updateHandler(product._id)} className="btn btn-sm btn-success mx-1">Update</button>
                                         |
-                                        <button className="btn btn-sm btn-error mx-1">Delete</button>
+                                        <button onClick={() => deleteHandler(product._id)} className="btn btn-sm btn-error mx-1">Delete</button>
 
                                     </td>
                                 </tr>
